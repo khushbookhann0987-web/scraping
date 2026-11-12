@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Site Reader – Website Information Scraper</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1 class="brand">Site Reader</h1>
+      <p class="tagline">Paste a website link. Get its pages, services, purpose and contact details.</p>
+
+      <form id="scrape-form" class="search" autocomplete="off">
+        <label class="sr-only" for="url">Website link</label>
+        <input id="url" name="url" type="text" placeholder="example.com" required spellcheck="false" />
+        <label class="sr-only" for="max-pages">Pages to scan</label>
+        <select id="max-pages" name="max_pages" title="How many pages to scan">
+          <option value="3">Scan 3 pages</option>
+          <option value="8" selected>Scan 8 pages</option>
+          <option value="15">Scan 15 pages</option>
+          <option value="25">Scan 25 pages</option>
+        </select>
+        <button id="submit-btn" type="submit">Scan website</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+
+    <section id="empty" class="empty">
+      <p>Enter a link above to start. Scanning usually takes 5–30 seconds depending on the site and the number of pages.</p>
+    </section>
+
+    <section id="results" hidden>
+      <div class="summary-row">
+        <div class="identity">
+          <img id="favicon" alt="" width="40" height="40" />
+          <div>
+            <h2 id="site-name"></h2>
+            <a id="site-url" target="_blank" rel="noopener noreferrer"></a>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="button" id="copy-btn" class="ghost">Copy JSON</button>
+          <button type="button" id="download-btn" class="ghost">Download JSON</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="panel wide">
+          <h3>Purpose</h3>
+          <p id="purpose-main" class="lead"></p>
+          <ul id="purpose-more" class="plain"></ul>
+          <dl id="site-meta" class="facts"></dl>
+        </article>
+
+        <article class="panel">
+          <h3>Contact</h3>
+          <div id="contact"></div>
+        </article>
+
+        <article class="panel">
+          <h3>Services &amp; offerings <span id="services-count" class="count"></span></h3>
+          <ul id="services" class="chips"></ul>
+          <p id="services-empty" class="muted" hidden>No clear services were found on the scanned pages.</p>
+        </article>
+
+        <article class="panel wide">
+          <h3>Pages <span id="pages-count" class="count"></span></h3>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Type</th><th>Title</th><th>Link</th><th class="num">Words</th></tr></thead>
+              <tbody id="pages-body"></tbody>
+            </table>
+          </div>
+          <details id="more-links-box">
+            <summary>Other links found but not scanned <span id="more-count" class="count"></span></summary>
+            <ul id="more-links" class="plain links"></ul>
+          </details>
+          <details id="sitemap-box">
+            <summary>Sitemap entries <span id="sitemap-count" class="count"></span></summary>
+            <ul id="sitemap-links" class="plain links"></ul>
+          </details>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p>Only scan sites you are allowed to access. Respect each website's terms of use and robots.txt.</p>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
