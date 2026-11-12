@@ -1,4 +1,6 @@
 """Flask backend for the Website Info Scraper."""
+import os
+
 from flask import Flask, jsonify, request, send_from_directory
 
 from scraper import ScrapeError, scrape_site
@@ -34,4 +36,6 @@ def api_scrape():
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    # Locally: http://127.0.0.1:5000. On Render this block is not used (gunicorn starts the app).
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="127.0.0.1", port=port, debug=os.environ.get("FLASK_DEBUG") == "1")
